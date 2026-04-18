@@ -13,7 +13,7 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
+  const [activeSection] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -134,8 +134,8 @@ export default function Navbar() {
                   ? i === 0
                     ? "rotate(45deg) translate(5px, 5px)"
                     : i === 2
-                    ? "rotate(-45deg) translate(5px, -5px)"
-                    : "none"
+                      ? "rotate(-45deg) translate(5px, -5px)"
+                      : "none"
                   : "none",
                 boxShadow: menuOpen ? "0 0 6px rgba(255,107,26,0.8)" : "none",
               }}

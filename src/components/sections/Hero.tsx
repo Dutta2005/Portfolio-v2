@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { ChevronDown, ScrollText } from "lucide-react";
-import { MandalaRingIcon, TrishulIcon } from "../icons/ShivaIcons";
+import { MandalaRingIcon, TrishulIcon, BigTrishulBg } from "../icons/ShivaIcons";
 
 const ROLES = [
   "Full Stack Developer",
@@ -78,6 +78,20 @@ export default function Hero() {
         style={{ color: "rgba(139,92,246,0.10)" }}
       >
         <MandalaRingIcon size={380} className="animate-mandala-reverse" />
+      </div>
+
+      {/* ── Giant Background Trishul — Divine Blessings of Mahadev ── */}
+      <div
+        className="absolute pointer-events-none animate-trishul-bg mt-50"
+        style={{
+          left: "50%",
+          top: "50%",
+          transform: "translate(-50%, -52%)",
+          zIndex: 1,
+          color: "#ff6b1a",
+        }}
+      >
+        <BigTrishulBg size={780} />
       </div>
 
       {/* Center glowing orb */}

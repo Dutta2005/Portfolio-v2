@@ -76,7 +76,7 @@ export default function Hero() {
     >
       {/* Deep background gradient — shifts with mouse */}
       <div
-        className="absolute inset-0 transition-all duration-1000"
+        className="absolute inset-0 transition-all duration-1000 pointer-events-none"
         style={{
           background: `
             radial-gradient(ellipse at ${30 + px * 10}% ${50 + py * 10}%, rgba(255,107,26,0.08) 0%, transparent 50%),
@@ -279,7 +279,7 @@ export default function Hero() {
         </p>
 
         {/* CTA Buttons — 3D hover effects */}
-        <div className="flex flex-wrap gap-4 justify-center mb-14">
+        <div className="relative z-50 flex flex-wrap gap-4 justify-center mb-14 pointer-events-auto">
           <button
             onClick={() => document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" })}
             className="group relative px-8 py-3.5 rounded-full font-cinzel font-bold text-sm tracking-widest overflow-hidden cursor-pointer"
@@ -413,7 +413,7 @@ export default function Hero() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="flex flex-col items-center gap-2 animate-float-3d">
+        <div className="relative z-50 flex flex-col items-center gap-2 animate-float-3d pointer-events-auto">
           <p
             className="font-cinzel text-xs tracking-widest"
             style={{ color: "rgba(107,114,128,0.6)", letterSpacing: "3px" }}

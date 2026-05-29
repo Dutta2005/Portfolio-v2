@@ -37,11 +37,14 @@ export default function Navbar() {
         backdropFilter: scrolled ? "blur(24px)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(24px)" : "none",
         borderBottom: scrolled ? "1px solid rgba(255,107,26,0.12)" : "none",
-        boxShadow: scrolled ? "0 4px 40px rgba(255,107,26,0.05)" : "none",
+        boxShadow: scrolled
+          ? "0 4px 40px rgba(255,107,26,0.05), 0 0 60px rgba(0,0,0,0.3)"
+          : "none",
+        transform: scrolled ? "translateZ(50px)" : "translateZ(0)",
       }}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo */}
+        {/* Logo — 3D rotating OM */}
         <a
           href="#hero"
           onClick={(e) => {
@@ -51,11 +54,29 @@ export default function Navbar() {
           className="flex items-center gap-2.5 group"
         >
           <div
-            className="relative w-9 h-9 flex items-center justify-center animate-glow-pulse"
+            className="relative w-9 h-9 flex items-center justify-center preserve-3d"
             style={{ color: "#ff6b1a" }}
           >
-            <MandalaRingIcon size={36} className="absolute inset-0 animate-mandala opacity-60" />
-            <span style={{ fontFamily: "serif", fontSize: "18px", color: "#f59e0b" }}>ॐ</span>
+            <div
+              className="absolute inset-0 opacity-60"
+              style={{
+                animation: "mandala-spin-3d 8s linear infinite",
+                transformStyle: "preserve-3d",
+              }}
+            >
+              <MandalaRingIcon size={36} />
+            </div>
+            <span
+              className="relative z-10"
+              style={{
+                fontFamily: "serif",
+                fontSize: "18px",
+                color: "#f59e0b",
+                filter: "drop-shadow(0 0 8px rgba(245,158,11,0.5))",
+              }}
+            >
+              ॐ
+            </span>
           </div>
           <div>
             <span
@@ -79,20 +100,28 @@ export default function Navbar() {
             <button
               key={link.href}
               onClick={() => handleNavClick(link.href)}
-              className="relative px-3 py-1.5 font-cinzel text-xs tracking-widest group transition-colors duration-300 cursor-pointer"
+              className="relative px-3 py-1.5 font-cinzel text-xs tracking-widest group cursor-pointer"
               style={{
                 color: activeSection === link.href ? "#ff6b1a" : "#9ca3af",
                 letterSpacing: "2px",
+                transition: "color 0.3s ease, transform 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.transform = "perspective(400px) translateZ(5px)";
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLButtonElement).style.transform = "perspective(400px) translateZ(0)";
               }}
             >
               <span className="relative z-10 group-hover:text-orange-400 transition-colors duration-300">
                 {link.label}
               </span>
-              {/* Underline glow */}
+              {/* 3D perspective underline glow */}
               <span
                 className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 group-hover:w-4/5 h-px transition-all duration-300"
                 style={{
                   background: "linear-gradient(90deg, transparent, #ff6b1a, transparent)",
+                  boxShadow: "0 2px 8px rgba(255,107,26,0.3)",
                 }}
               />
             </button>
@@ -101,13 +130,24 @@ export default function Navbar() {
           {/* CTA */}
           <a
             href="mailto:rdhack247@gmail.com"
-            className="ml-4 px-4 py-1.5 rounded-full font-cinzel text-xs font-semibold tracking-widest transition-all duration-300 cursor-pointer hover:scale-105"
+            className="ml-4 px-4 py-1.5 rounded-full font-cinzel text-xs font-semibold tracking-widest cursor-pointer"
             style={{
               background: "linear-gradient(135deg, #ff6b1a, #8b5cf6)",
               color: "#ffffff",
               letterSpacing: "1.5px",
               boxShadow: "0 0 20px rgba(255,107,26,0.3)",
               fontSize: "10px",
+              transition: "transform 0.3s ease, box-shadow 0.3s ease",
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget;
+              el.style.transform = "perspective(400px) translateZ(8px) scale(1.05)";
+              el.style.boxShadow = "0 0 40px rgba(255,107,26,0.5), 0 0 60px rgba(139,92,246,0.2)";
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget;
+              el.style.transform = "perspective(400px) translateZ(0) scale(1)";
+              el.style.boxShadow = "0 0 20px rgba(255,107,26,0.3)";
             }}
           >
             CONNECT

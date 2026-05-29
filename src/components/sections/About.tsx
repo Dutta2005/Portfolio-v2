@@ -2,13 +2,46 @@ import { useRef, useEffect, useState } from "react";
 import { personalInfo } from "../../data/portfolio";
 import { MandalaRingIcon, TrishulIcon } from "../icons/ShivaIcons";
 import { Zap, Code2, Brain, Globe } from "lucide-react";
+import { use3DTilt } from "../../hooks/use3DTilt";
 
 const FOCUS_ICONS = [Zap, Code2, Brain, Globe];
 const FOCUS_COLORS = ["#ff6b1a", "#8b5cf6", "#22d3ee", "#f59e0b"];
 
+function FocusCard({ focus, i }: { focus: string; i: number }) {
+  const Icon = FOCUS_ICONS[i % FOCUS_ICONS.length];
+  const color = FOCUS_COLORS[i % FOCUS_COLORS.length];
+  const { cardRef, tiltHandlers } = use3DTilt({
+    maxTilt: 15,
+    scale: 1.04,
+    glowColor: `${color}30`,
+  });
+
+  return (
+    <div
+      ref={cardRef}
+      {...tiltHandlers}
+      className="relative flex items-start gap-3 p-3 rounded-xl cursor-default card-3d overflow-hidden"
+      style={{
+        background: `${color}08`,
+        border: `1px solid ${color}20`,
+        transformStyle: "preserve-3d",
+      }}
+    >
+      <div className="tilt-shine" />
+      <div className="mt-0.5 shrink-0" style={{ color }}>
+        <Icon size={14} />
+      </div>
+      <p style={{ color: "rgba(232,224,240,0.7)", fontSize: "13px", lineHeight: "1.5" }}>
+        {focus}
+      </p>
+    </div>
+  );
+}
+
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
+  const quoteRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -18,6 +51,21 @@ export default function About() {
     if (sectionRef.current) observer.observe(sectionRef.current);
     return () => observer.disconnect();
   }, []);
+
+  // Quote card tilt on hover
+  const handleQuoteMove = (e: React.MouseEvent) => {
+    if (!quoteRef.current) return;
+    const rect = quoteRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 8;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -8;
+    quoteRef.current.style.transform = `perspective(600px) rotateX(${y}deg) rotateY(${x}deg)`;
+  };
+
+  const handleQuoteLeave = () => {
+    if (quoteRef.current) {
+      quoteRef.current.style.transform = "perspective(600px) rotateX(0) rotateY(0)";
+    }
+  };
 
   return (
     <section
@@ -29,8 +77,8 @@ export default function About() {
       <div className="absolute inset-0 bg-radial-saffron pointer-events-none" />
 
       {/* Om watermark */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 pointer-events-none opacity-5">
-        <MandalaRingIcon size={500} className="text-saffron animate-mandala-slow" />
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 pointer-events-none opacity-5 preserve-3d">
+        <MandalaRingIcon size={500} className="text-saffron animate-mandala-3d" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6">
@@ -56,39 +104,52 @@ export default function About() {
 
         {/* Main grid */}
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left — Avatar + divine frame */}
+          {/* Left — Avatar + divine frame with 3D */}
           <div
             className={`flex justify-center transition-all duration-700 delay-200 ${
               visible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-12"
             }`}
           >
-            <div className="relative">
-              {/* Outer rotating ring */}
+            <div className="relative preserve-3d" style={{ perspective: "800px" }}>
+              {/* Outer rotating ring — 3D orbit */}
               <div
-                className="absolute inset-0 -m-6 animate-mandala"
+                className="absolute inset-0 -m-6 animate-mandala-3d"
                 style={{ color: "rgba(255,107,26,0.25)" }}
               >
                 <MandalaRingIcon size={380} />
               </div>
 
-              {/* Inner rotating ring */}
+              {/* Inner rotating ring — reverse 3D orbit */}
               <div
-                className="absolute inset-0 -m-2 animate-mandala-reverse"
-                style={{ color: "rgba(139,92,246,0.2)" }}
+                className="absolute inset-0 -m-2 preserve-3d"
+                style={{
+                  color: "rgba(139,92,246,0.2)",
+                  animation: "mandala-spin-reverse 25s linear infinite",
+                  transform: "rotateX(-10deg)",
+                }}
               >
                 <MandalaRingIcon size={330} />
               </div>
 
+              {/* Sacred glow orb behind avatar */}
+              <div
+                className="absolute inset-0 -m-8 rounded-full"
+                style={{
+                  background: "radial-gradient(circle, rgba(255,107,26,0.15) 0%, rgba(139,92,246,0.08) 40%, transparent 70%)",
+                  animation: "breathing-glow 4s ease-in-out infinite",
+                }}
+              />
+
               {/* Avatar card */}
               <div
-                className="relative w-64 h-64 md:w-72 md:h-72 rounded-full overflow-hidden animate-float-y"
+                className="relative w-64 h-64 md:w-72 md:h-72 rounded-full overflow-hidden animate-float-3d"
                 style={{
                   border: "3px solid rgba(255,107,26,0.4)",
                   boxShadow:
                     "0 0 40px rgba(255,107,26,0.2), 0 0 80px rgba(139,92,246,0.1), inset 0 0 30px rgba(0,0,0,0.5)",
+                  transformStyle: "preserve-3d",
                 }}
               >
-                {/* Divine avatar placeholder with Shiva aesthetic */}
                 <div
                   className="w-full h-full flex flex-col items-center justify-center"
                   style={{
@@ -98,7 +159,10 @@ export default function About() {
                 >
                   <div
                     className="text-8xl mb-2 animate-glow-pulse"
-                    style={{ filter: "drop-shadow(0 0 20px rgba(245,158,11,0.6))" }}
+                    style={{
+                      filter: "drop-shadow(0 0 20px rgba(245,158,11,0.6))",
+                      transform: "translateZ(20px)",
+                    }}
                   >
                     ॐ
                   </div>
@@ -125,6 +189,7 @@ export default function About() {
                     border: `2px solid ${pos.color}`,
                     color: pos.color,
                     boxShadow: `0 0 12px ${pos.color}60`,
+                    transform: "translateZ(30px)",
                   }}
                 >
                   <TrishulIcon size={16} />
@@ -139,13 +204,23 @@ export default function About() {
               visible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-12"
             }`}
           >
-            {/* Divine quote */}
+            {/* Divine quote — 3D tilt on hover */}
             <div
-              className="p-5 rounded-2xl mb-8"
+              ref={quoteRef}
+              className="p-5 rounded-2xl mb-8 cursor-default"
               style={{
                 background: "rgba(255,107,26,0.04)",
                 border: "1px solid rgba(255,107,26,0.15)",
                 borderLeft: "3px solid #ff6b1a",
+                transition: "transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.4s ease",
+                transformStyle: "preserve-3d",
+              }}
+              onMouseMove={handleQuoteMove}
+              onMouseLeave={handleQuoteLeave}
+              onMouseEnter={() => {
+                if (quoteRef.current) {
+                  quoteRef.current.style.boxShadow = "0 20px 50px rgba(0,0,0,0.3), 0 0 30px rgba(255,107,26,0.1)";
+                }
               }}
             >
               <p
@@ -173,7 +248,7 @@ export default function About() {
               agentic workflows.
             </p>
 
-            {/* Current focus */}
+            {/* Current focus — 3D tilt cards */}
             <div>
               <h3
                 className="font-cinzel text-xs font-bold tracking-widest mb-4"
@@ -183,35 +258,17 @@ export default function About() {
               </h3>
 
               <div className="grid sm:grid-cols-2 gap-3">
-                {personalInfo.currentFocus.map((focus, i) => {
-                  const Icon = FOCUS_ICONS[i % FOCUS_ICONS.length];
-                  const color = FOCUS_COLORS[i % FOCUS_COLORS.length];
-                  return (
-                    <div
-                      key={i}
-                      className="flex items-start gap-3 p-3 rounded-xl transition-all duration-300 hover:scale-102 group cursor-default"
-                      style={{
-                        background: `${color}08`,
-                        border: `1px solid ${color}20`,
-                      }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLDivElement).style.borderColor = `${color}50`;
-                        (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 16px ${color}20`;
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLDivElement).style.borderColor = `${color}20`;
-                        (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
-                      }}
-                    >
-                      <div className="mt-0.5 shrink-0" style={{ color }}>
-                        <Icon size={14} />
-                      </div>
-                      <p style={{ color: "rgba(232,224,240,0.7)", fontSize: "13px", lineHeight: "1.5" }}>
-                        {focus}
-                      </p>
-                    </div>
-                  );
-                })}
+                {personalInfo.currentFocus.map((focus, i) => (
+                  <div
+                    key={i}
+                    className={`transition-all duration-500 ${
+                      visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+                    }`}
+                    style={{ transitionDelay: `${400 + i * 100}ms` }}
+                  >
+                    <FocusCard focus={focus} i={i} />
+                  </div>
+                ))}
               </div>
             </div>
 

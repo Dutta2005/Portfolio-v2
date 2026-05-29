@@ -18,19 +18,25 @@ export default function Footer() {
         borderTop: "1px solid rgba(255,107,26,0.12)",
       }}
     >
-      {/* Top divine separator */}
-      <div className="divine-separator" />
+      {/* Sacred fire divider at top */}
+      <div className="sacred-fire-divider" />
 
-      {/* Background mandala watermark */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5">
-        <MandalaRingIcon size={400} className="text-saffron animate-mandala-slow" />
+      {/* Background mandala watermark — 3D rotation */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5 preserve-3d">
+        <MandalaRingIcon size={400} className="text-saffron animate-mandala-3d" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-16 text-center">
-        {/* Om symbol */}
+        {/* Om symbol — 3D */}
         <div className="flex justify-center mb-6">
-          <div className="animate-glow-pulse" style={{ color: "#f59e0b" }}>
-            <MandalaRingIcon size={68} className="animate-mandala" />
+          <div
+            className="preserve-3d"
+            style={{
+              color: "#f59e0b",
+              animation: "glow-pulse 3s ease-in-out infinite, mandala-spin-3d 12s linear infinite",
+            }}
+          >
+            <MandalaRingIcon size={68} />
           </div>
         </div>
 
@@ -58,7 +64,7 @@ export default function Footer() {
           optimize."
         </p>
 
-        {/* Social Links */}
+        {/* Social Links — 3D hover float */}
         <div className="flex justify-center gap-4 mb-10 flex-wrap">
           {SOCIAL_LINKS.map(({ icon: Icon, href, label }) => (
             <a
@@ -67,19 +73,22 @@ export default function Footer() {
               target={href.startsWith("http") ? "_blank" : undefined}
               rel="noreferrer"
               aria-label={label}
-              className="group w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110"
+              className="group w-10 h-10 rounded-full flex items-center justify-center"
               style={{
                 background: "rgba(255,255,255,0.04)",
                 border: "1px solid rgba(255,255,255,0.08)",
+                transition: "transform 0.3s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease",
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLAnchorElement;
+                el.style.transform = "perspective(400px) translateZ(12px) scale(1.15)";
                 el.style.borderColor = "rgba(255,107,26,0.5)";
-                el.style.boxShadow = "0 0 14px rgba(255,107,26,0.3)";
+                el.style.boxShadow = "0 10px 30px rgba(0,0,0,0.3), 0 0 20px rgba(255,107,26,0.3)";
                 el.style.background = "rgba(255,107,26,0.08)";
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLAnchorElement;
+                el.style.transform = "perspective(400px) translateZ(0) scale(1)";
                 el.style.borderColor = "rgba(255,255,255,0.08)";
                 el.style.boxShadow = "none";
                 el.style.background = "rgba(255,255,255,0.04)";

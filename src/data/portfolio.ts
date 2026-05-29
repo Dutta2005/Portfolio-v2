@@ -72,6 +72,16 @@ export const experiences: Experience[] = [
     color: "saffron",
   },
   {
+    role: "Software Development Engineer Intern",
+    company: "DeepDuoFoundation",
+    period: "February 2026 – April 2026",
+    type: "Remote",
+    description:
+      "Like the eternal flow of the Ganges — swift, purposeful, and life-giving — I architected Redis-powered caching streams that silenced the chaos of latency, fortified the sacred pillars of backend truth through auth and data harmony, and breathed soul into real-time experiences via the electric pulse of WebSockets and a reborn feed that speaks to users across the digital cosmos.",
+    tech: ["Redis", "WebSockets", "Node.js", "REST APIs", "MongoDB", "PostgreSQL"],
+    color: "ganga",
+  },
+  {
     role: "Full Stack Developer Intern",
     company: "Neuxa Global",
     period: "May 2025 – July 2025",
@@ -80,17 +90,7 @@ export const experiences: Experience[] = [
       "With the unwavering focus of Mahadev's blazing third eye, I built responsive full-stack web applications, crafted scalable RESTful APIs, and wove seamless database integrations — always optimizing for clarity, performance, and cosmic user experiences.",
     tech: ["Next.js", "Node.js", "Supabase", "Prisma", "TypeScript"],
     color: "violet",
-  },
-  {
-    role: "Web Developer Intern",
-    company: "NeuroNexus Innovations",
-    period: "April 2025 – May 2025",
-    type: "Remote",
-    description:
-      "Channeling the creative Tandava — the divine cosmic dance of Lord Shiva — I developed MERN stack interfaces and backend integrations, weaving products born from innovation that connects souls across digital realms.",
-    tech: ["React", "Node.js", "MongoDB", "Express.js", "Tailwind CSS"],
-    color: "ganga",
-  },
+  }
 ];
 
 export interface Project {

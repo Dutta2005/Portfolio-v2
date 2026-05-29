@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { experiences } from "../../data/portfolio";
 import { Briefcase, MapPin, Calendar } from "lucide-react";
 
@@ -7,6 +7,185 @@ const COLOR_MAP = {
   violet: { primary: "#8b5cf6", glow: "rgba(139,92,246,0.25)", border: "rgba(139,92,246,0.3)", bg: "rgba(139,92,246,0.06)" },
   ganga: { primary: "#22d3ee", glow: "rgba(34,211,238,0.25)", border: "rgba(34,211,238,0.3)", bg: "rgba(34,211,238,0.05)" },
 };
+
+function ExperienceCard({
+  exp,
+  index,
+  visible,
+}: {
+  exp: (typeof experiences)[0];
+  index: number;
+  visible: boolean;
+}) {
+  const c = COLOR_MAP[exp.color];
+  const delay = index * 200;
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 10;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -10;
+    cardRef.current.style.transform = `perspective(800px) rotateX(${y}deg) rotateY(${x}deg) translateZ(20px) scale(1.01)`;
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsHovered(false);
+    if (cardRef.current) {
+      cardRef.current.style.transform = "perspective(800px) rotateX(0) rotateY(0) translateZ(0) scale(1)";
+    }
+  }, []);
+
+  return (
+    <div
+      className={`relative flex gap-6 md:gap-8 ${
+        visible ? "opacity-100" : "opacity-0"
+      }`}
+      style={{
+        animation: visible ? `slide-from-depth 0.8s cubic-bezier(0.23, 1, 0.32, 1) ${delay}ms both` : "none",
+      }}
+    >
+      {/* Timeline dot — 3D orb */}
+      <div className="hidden md:flex flex-col items-center shrink-0 w-16">
+        <div
+          className="w-5 h-5 rounded-full mt-8 relative z-10"
+          style={{
+            background: `radial-gradient(circle at 35% 35%, ${c.primary}, ${c.primary}80)`,
+            boxShadow: `0 0 16px ${c.glow}, 0 0 32px ${c.glow}`,
+            animation: "glow-pulse 3s ease-in-out infinite",
+          }}
+        >
+          {/* Ripple halos */}
+          <span
+            className="absolute inset-0 rounded-full"
+            style={{
+              border: `2px solid ${c.primary}`,
+              animation: "ripple 2.5s ease-out infinite",
+            }}
+          />
+          <span
+            className="absolute inset-0 rounded-full"
+            style={{
+              border: `1px solid ${c.primary}60`,
+              animation: "ripple 2.5s ease-out infinite 0.8s",
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Card — 3D tilt on hover */}
+      <div
+        ref={cardRef}
+        className="flex-1 p-6 md:p-7 rounded-2xl group relative"
+        style={{
+          background: c.bg,
+          border: `1px solid ${c.border}`,
+          boxShadow: isHovered ? `0 25px 60px rgba(0,0,0,0.4), 0 0 40px ${c.glow}` : "0 0 0 rgba(0,0,0,0)",
+          transformStyle: "preserve-3d",
+          transition: "transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease",
+          willChange: "transform",
+        }}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={handleMouseLeave}
+      >
+        {/* Holographic shine */}
+        {isHovered && (
+          <div
+            className="absolute inset-0 rounded-2xl pointer-events-none z-10"
+            style={{
+              background: "linear-gradient(135deg, rgba(255,255,255,0.06) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.03) 100%)",
+            }}
+          />
+        )}
+
+        {/* Sacred watermark on hover */}
+        <div
+          className="absolute top-3 right-3 font-cinzel pointer-events-none transition-opacity duration-300"
+          style={{
+            fontSize: "10px",
+            color: `${c.primary}20`,
+            letterSpacing: "2px",
+            opacity: isHovered ? 1 : 0,
+          }}
+        >
+          हर हर महादेव
+        </div>
+
+        {/* Top row */}
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4 relative" style={{ transform: "translateZ(15px)" }}>
+          <div>
+            <h3
+              className="font-cinzel font-bold text-lg mb-1"
+              style={{ color: c.primary }}
+            >
+              {exp.role}
+            </h3>
+            <div className="flex items-center gap-2">
+              <Briefcase size={13} style={{ color: "rgba(232,224,240,0.5)" }} />
+              <span className="font-semibold" style={{ color: "#e8e0f0", fontSize: "14px" }}>
+                {exp.company}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex flex-col items-start sm:items-end gap-1.5 shrink-0">
+            <div
+              className="flex items-center gap-1.5 px-3 py-1 rounded-full"
+              style={{
+                background: `${c.primary}15`,
+                border: `1px solid ${c.border}`,
+              }}
+            >
+              <Calendar size={12} style={{ color: c.primary }} />
+              <span className="font-cinzel text-xs" style={{ color: c.primary, letterSpacing: "1px" }}>
+                {exp.period}
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <MapPin size={12} style={{ color: "rgba(232,224,240,0.35)" }} />
+              <span style={{ color: "rgba(232,224,240,0.4)", fontSize: "12px" }}>
+                {exp.type}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Description */}
+        <p
+          className="mb-5 leading-relaxed relative"
+          style={{
+            color: "rgba(232,224,240,0.65)",
+            fontSize: "14px",
+            lineHeight: "1.85",
+            transform: "translateZ(10px)",
+          }}
+        >
+          {exp.description}
+        </p>
+
+        {/* Tech pills */}
+        <div className="flex flex-wrap gap-2 relative" style={{ transform: "translateZ(12px)" }}>
+          {exp.tech.map((tech) => (
+            <span
+              key={tech}
+              className="tech-pill transition-all duration-300"
+              style={{
+                background: `${c.primary}12`,
+                border: `1px solid ${c.border}`,
+                color: c.primary,
+                boxShadow: isHovered ? `0 0 8px ${c.glow}` : "none",
+              }}
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Experience() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -48,129 +227,24 @@ export default function Experience() {
 
         {/* Timeline */}
         <div className="relative">
-          {/* Center line — the Ganga river of time */}
+          {/* Center line — the Ganga river of time with glow */}
           <div
             className="absolute left-8 top-0 bottom-0 w-px hidden md:block"
             style={{
               background: "linear-gradient(180deg, rgba(255,107,26,0.6), rgba(139,92,246,0.6), rgba(34,211,238,0.6), transparent)",
+              boxShadow: "0 0 8px rgba(255,107,26,0.2), 0 0 16px rgba(139,92,246,0.1)",
             }}
           />
 
           <div className="space-y-8">
-            {experiences.map((exp, index) => {
-              const c = COLOR_MAP[exp.color];
-              const delay = index * 150;
-
-              return (
-                <div
-                  key={index}
-                  className={`relative flex gap-6 md:gap-8 transition-all duration-700 ${
-                    visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-                  }`}
-                  style={{ transitionDelay: `${delay}ms` }}
-                >
-                  {/* Timeline dot */}
-                  <div className="hidden md:flex flex-col items-center shrink-0 w-16">
-                    <div
-                      className="w-4 h-4 rounded-full mt-8 relative z-10 animate-glow-pulse"
-                      style={{
-                        background: c.primary,
-                        boxShadow: `0 0 12px ${c.glow}, 0 0 24px ${c.glow}`,
-                      }}
-                    >
-                      {/* Ripple */}
-                      <span
-                        className="absolute inset-0 rounded-full"
-                        style={{
-                          border: `2px solid ${c.primary}`,
-                          animation: "ripple 2.5s ease-out infinite",
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Card */}
-                  <div
-                    className="flex-1 p-6 md:p-7 rounded-2xl group transition-all duration-400 hover:scale-[1.01]"
-                    style={{
-                      background: c.bg,
-                      border: `1px solid ${c.border}`,
-                      boxShadow: `0 0 0 rgba(0,0,0,0)`,
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 30px ${c.glow}, 0 8px 40px rgba(0,0,0,0.3)`;
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLDivElement).style.boxShadow = "0 0 0 rgba(0,0,0,0)";
-                    }}
-                  >
-                    {/* Top row */}
-                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-4">
-                      <div>
-                        <h3
-                          className="font-cinzel font-bold text-lg mb-1"
-                          style={{ color: c.primary }}
-                        >
-                          {exp.role}
-                        </h3>
-                        <div className="flex items-center gap-2">
-                          <Briefcase size={13} style={{ color: "rgba(232,224,240,0.5)" }} />
-                          <span className="font-semibold" style={{ color: "#e8e0f0", fontSize: "14px" }}>
-                            {exp.company}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col items-start sm:items-end gap-1.5 shrink-0">
-                        <div
-                          className="flex items-center gap-1.5 px-3 py-1 rounded-full"
-                          style={{
-                            background: `${c.primary}15`,
-                            border: `1px solid ${c.border}`,
-                          }}
-                        >
-                          <Calendar size={12} style={{ color: c.primary }} />
-                          <span className="font-cinzel text-xs" style={{ color: c.primary, letterSpacing: "1px" }}>
-                            {exp.period}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <MapPin size={12} style={{ color: "rgba(232,224,240,0.35)" }} />
-                          <span style={{ color: "rgba(232,224,240,0.4)", fontSize: "12px" }}>
-                            {exp.type}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Description */}
-                    <p
-                      className="mb-5 leading-relaxed"
-                      style={{ color: "rgba(232,224,240,0.65)", fontSize: "14px", lineHeight: "1.85" }}
-                    >
-                      {exp.description}
-                    </p>
-
-                    {/* Tech pills */}
-                    <div className="flex flex-wrap gap-2">
-                      {exp.tech.map((tech) => (
-                        <span
-                          key={tech}
-                          className="tech-pill"
-                          style={{
-                            background: `${c.primary}12`,
-                            border: `1px solid ${c.border}`,
-                            color: c.primary,
-                          }}
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+            {experiences.map((exp, index) => (
+              <ExperienceCard
+                key={index}
+                exp={exp}
+                index={index}
+                visible={visible}
+              />
+            ))}
           </div>
         </div>
       </div>

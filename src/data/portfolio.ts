@@ -109,10 +109,10 @@ export const projects: Project[] = [
     title: "Jeevan Verse",
     tagline: "Where life connects life — by Mahadev's boundless grace",
     description:
-      "A MERN stack web app where users can find symptoms, request blood, join sacred discussions, and support health campaigns. A digital temple of wellness and community.",
+      "A MERN stack web app where users get personalized AI health insights, request blood, join sacred discussions, and support health campaigns. A digital temple of wellness and community.",
     github: "https://github.com/Dutta2005/Jeevan-verse",
     live: "https://jeevan-verse.vercel.app/",
-    tech: ["MERN", "Tailwind CSS", "Socket.io", "Nodemailer"],
+    tech: ["MERN", "RAG", "Gemini", "Vector Embeddings", "Pinecone", "Socket.io", "Nodemailer"],
     featured: true,
     color: "saffron",
   },

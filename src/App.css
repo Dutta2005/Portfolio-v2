@@ -327,9 +327,10 @@
   .contact-details { align-items: flex-start; }
 }
 @media screen and (max-width: 700px) {
+  .resume-sidebar { display: none; }
   html { scroll-padding-top: 90px; }
   .site-header { backdrop-filter: none; background: var(--canvas); }
-  .portfolio { padding-top: 66px; padding-bottom: calc(105px + env(safe-area-inset-bottom, 0px)); }
+  .portfolio { padding-top: 66px; padding-bottom: calc(90px + env(safe-area-inset-bottom, 0px)); }
   .header-inner { min-height: 66px; }
   .header-email { display: inline-flex; font-size: 12px; gap: 8px; min-height: 44px; }
   .header-mail-icon { display: block; }

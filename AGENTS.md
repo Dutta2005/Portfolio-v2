@@ -37,3 +37,5 @@ status, validation, and remaining questions at handoff.
   it with printing. The theme control stays icon-only with no border or hover box.
 - The brand is the literal <raj/> wordmark in a Monaco-first monospace stack, with
   brass punctuation. Keep it readable in both themes and use matching favicon text.
+- Hide the About/Technical toolkit sidebar on mobile screens up to 700px; retain
+  it on larger screens and in print. The full #skills section stays visible.

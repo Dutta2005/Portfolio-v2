@@ -24,7 +24,16 @@ project list or hide projects behind a disclosure.
 - Local .env, .qa/ outputs, and pre-existing .claude/settings.local.json are not part of the changeset.
 - Final production build and ESLint passed before commit. Staged whitespace checks passed; browser verification is recorded below.
 
-## Latest refinement: Monaco code wordmark
+## Latest refinement: streamlined mobile content
+
+- Hide the resume-sidebar (A little about me and Technical toolkit) on screens
+  up to 700px, using the existing mobile breakpoint and a screen-only media query.
+- Desktop/tablet sidebar and print content remain available. The dedicated
+  Technical skills section (#skills) remains visible on mobile.
+
+Validation: production build and lint passed. Browser checks at 320, 390, 700, 701, and 1440px confirmed the sidebar visibility breakpoint, all 45 dedicated skills, and preserved print visibility. This refinement is local on the existing PR branch.
+
+## Previous refinement: Monaco code wordmark
 
 - Raj requested the exact logo text <raj/> in Monaco with coding/development styling.
 - Logo.tsx now renders the wordmark in a Monaco-first monospace stack, with brass
@@ -59,6 +68,7 @@ Raj requested a coding/development logo, a working light mode, and a distinct
 footer color for “Har Har Mahadev.”
 
 Implemented:
+
 - Replaced the initials badge with a custom inline SVG terminal-window / code
   bracket logo in Logo.tsx. Matching geometry is used in public/favicon.svg.
   This is a code-native vector mark; no raster generation or new dependency.
@@ -85,6 +95,7 @@ Implemented:
   screen theme cannot override white-paper résumé colors.
 
 Validation:
+
 - Production TypeScript/Vite build and ESLint passed.
 - Both themes checked at widths 1920, 1440, 1024, 768, 700, 390, 320.
 - Verified initial OS preference, live OS changes, manual override, reload
@@ -111,6 +122,7 @@ and Contact; a complete technical skills section; a smaller sidebar toolkit with
 important skills/icons; and Home/Skills navigation with fixed desktop/mobile UI.
 
 Implemented:
+
 - Shared SocialLinks component in hero, Contact, and footer. All five accessible
   links use recognizable monochrome icons, descriptive names, visible focus, and
   appropriate external-link attributes. Contact retains prominent email + phone.
@@ -140,6 +152,7 @@ Implemented:
   the six project descriptions. The generated résumé remains two A4 pages.
 
 Validation for this revision:
+
 - TypeScript/Vite build and lint passed.
 - Browser checks passed at widths 1920, 1440, 1024, 768, 700, 390, 320.
 - Verified exact social URLs, five social icons in each of three regions, seven
@@ -214,15 +227,15 @@ The root **screenshots/** directory now contains required website source assets.
 Do not delete or ignore it as temporary QA output. Originals remain unchanged.
 Vite imports and fingerprints the images; no absolute deployment paths are used.
 
-| Source asset | Usage |
-| --- | --- |
-| screenshots/raj.jpeg | Hero portrait; high fetch priority; 400 × 400 |
-| screenshots/jeevan-verse.png | Jeevan Verse project preview |
-| screenshots/daily-ai-agent.png | Daily Tech News Agent project illustration |
-| screenshots/orbit-cli.png | Orbit CLI project illustration |
-| screenshots/portfolio-ai.png | PortfolioAI project preview |
-| screenshots/mini-k8s.png | Mini Kubernetes concept diagram |
-| screenshots/streamify.png | Streamify project preview |
+| Source asset                   | Usage                                         |
+| ------------------------------ | --------------------------------------------- |
+| screenshots/raj.jpeg           | Hero portrait; high fetch priority; 400 × 400 |
+| screenshots/jeevan-verse.png   | Jeevan Verse project preview                  |
+| screenshots/daily-ai-agent.png | Daily Tech News Agent project illustration    |
+| screenshots/orbit-cli.png      | Orbit CLI project illustration                |
+| screenshots/portfolio-ai.png   | PortfolioAI project preview                   |
+| screenshots/mini-k8s.png       | Mini Kubernetes concept diagram               |
+| screenshots/streamify.png      | Streamify project preview                     |
 
 Project image imports/alt text/intrinsic dimensions live in src/data/portfolio.ts.
 The portrait is imported in Hero.tsx. Project images are lazy loaded and displayed
@@ -307,6 +320,7 @@ First redesign: production build, lint, responsive/browser checks, print, and
 visual review passed.
 
 Image-led revision:
+
 - TypeScript/Vite production build and ESLint passed.
 - All seven original images loaded successfully, including the hero portrait.
 - Confirmed exact six-project order, no disclosure, removed legacy projects,

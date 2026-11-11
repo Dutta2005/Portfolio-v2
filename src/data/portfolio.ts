@@ -1,220 +1,177 @@
+import jeevanImage from "../../screenshots/jeevan-verse.png";
+import dailyAgentImage from "../../screenshots/daily-ai-agent.png";
+import orbitImage from "../../screenshots/orbit-cli.png";
+import portfolioImage from "../../screenshots/portfolio-ai.png";
+import kubernetesImage from "../../screenshots/mini-k8s.png";
+import streamifyImage from "../../screenshots/streamify.png";
+
 export const personalInfo = {
   name: "Raj Dutta",
-  title: "Full Stack Developer & AI Engineer",
-  divineTitle: "Devotee of Lord Mahadev · Builder of Digital Realms",
+  title: "AI Engineer & Full Stack Developer",
   email: "rdhack247@gmail.com",
   phone: "+91 8918794465",
   github: "https://github.com/Dutta2005",
   linkedin: "https://www.linkedin.com/in/rajdutta062005/",
   twitter: "https://x.com/RajDutta2005",
-  instagram: "https://www.instagram.com/raj_rd_001/",
-  quote:
-    "Life is a divine algorithm, intricately coded by the universe, yet yours to rewrite and optimize.",
-  summary:
-    "Like Mahadev who sustains the entire cosmos in absolute stillness, I architect systems that hold scale — full-stack platforms, AI-powered tools, and SaaS products engineered with cosmic precision, sacred purpose, and unstoppable power.",
-  currentFocus: [
-    "Building AI-powered developer tools and SaaS products",
-    "Exploring advanced agentic AI workflows & Model Context Protocol (MCP)",
-    "Contributing to open-source communities and mentoring developers",
-    "Cloud-native and scalable full-stack architectures",
-  ],
+  instagram: "https://www.instagram.com/raj_rd_001",
+  summary: "I build AI-powered features, intelligent agents, and full-stack web applications. My work connects practical AI with thoughtful product engineering.",
 };
 
-export interface Skill {
-  name: string;
-  category: string;
-}
+export const socialLinks = [
+  { id: "github", label: "GitHub", href: personalInfo.github },
+  { id: "linkedin", label: "LinkedIn", href: personalInfo.linkedin },
+  { id: "twitter", label: "X", href: personalInfo.twitter },
+  { id: "instagram", label: "Instagram", href: personalInfo.instagram },
+  { id: "email", label: "Email", href: "mailto:" + personalInfo.email },
+] as const;
 
 export const skillCategories: Record<string, string[]> = {
   Languages: ["C", "C++", "JavaScript", "TypeScript", "Python", "Java"],
   Frontend: ["HTML5", "CSS3", "React", "Tailwind CSS", "Next.js"],
-  Backend: ["Node.js", "Express.js", "FastAPI"],
-  "Databases & ORM": [
-    "MongoDB",
-    "PostgreSQL",
-    "Prisma",
-    "Drizzle ORM",
-    "Supabase",
-    "NeonDB",
-  ],
-  "AI & Agentic": [
-    "LangChain",
-    "LangGraph",
-    "OpenAI SDK",
-    "RAG",
-    "Agentic AI",
-    "MCP",
-    "Pinecone",
-  ],
-  "Cloud & Deploy": ["Docker", "Vercel", "Render", "AWS", "GCP"],
-  "Tools & Ecosystem": ["Git", "GitHub", "VS Code", "Clerk", "Firebase"],
+  Backend: ["Node.js", "Express.js", "FastAPI", "BullMQ"],
+  "Databases & ORM": ["MongoDB", "PostgreSQL", "Prisma", "Drizzle ORM", "Supabase", "NeonDB", "Redis", "Valkey"],
+  "AI & agents": ["LangChain", "LangGraph", "OpenAI SDK", "RAG", "Agentic AI", "MCP", "Pinecone", "Gemini", "OpenRouter", "Vercel AI SDK"],
+  "Cloud & deployment": ["Docker", "Vercel", "Render", "AWS", "GCP"],
+  "Tools & integrations": ["Git", "GitHub", "VS Code", "Clerk", "Firebase", "GitHub Actions", "Resend"],
 };
+
+export const featuredSkills = ["React", "Next.js", "TypeScript", "Python", "Node.js", "PostgreSQL", "LangChain", "LangGraph", "Docker", "Git"];
 
 export interface Experience {
   role: string;
   company: string;
   period: string;
-  type: string;
-  description: string;
-  tech: string[];
-  color: "saffron" | "violet" | "ganga";
+  current?: boolean;
+  category: string;
+  bullets: string[];
 }
 
 export const experiences: Experience[] = [
   {
-    role: "Organizer & Open Source Mentor",
-    company: "JGEC Winter of Code (JWoC) 2026",
-    period: "Feb 2026 – Mar 2026",
-    type: "Remote",
-    description:
-      "Like the sacred Ganga that descends from Shiva's matted locks — purifying, guiding, and nourishing all it meets — I led contributors through their open-source awakening. Architected backend infrastructure for auth, project management, and leaderboard systems. Mentored contributors on DashSummarize (AI Chrome extension) and Orbit CLI (multi-provider AI agent).",
-    tech: ["Node.js", "Express.js", "Supabase", "Next.js", "Gen AI"],
-    color: "saffron",
+    role: "AI Engineer Intern",
+    company: "InterviewSurge",
+    period: "Sep 2026 – Present",
+    current: true,
+    category: "AI & product engineering",
+    bullets: [
+      "Develop AI-powered features, intelligent agents, and automated workflows across the product.",
+      "Refine UI/UX and improve product functionality through hands-on product engineering.",
+      "Contribute to product growth through AI-driven marketing, SEO, GEO, and content automation.",
+    ],
   },
   {
     role: "Software Development Engineer Intern",
     company: "DeepDuoFoundation",
-    period: "February 2026 – April 2026",
-    type: "Remote",
-    description:
-      "Like the eternal flow of the Ganges — swift, purposeful, and life-giving — I architected Redis-powered caching streams that silenced the chaos of latency, fortified the sacred pillars of backend truth through auth and data harmony, and breathed soul into real-time experiences via the electric pulse of WebSockets and a reborn feed that speaks to users across the digital cosmos.",
-    tech: ["Redis", "WebSockets", "Node.js", "REST APIs", "MongoDB", "PostgreSQL"],
-    color: "ganga",
+    period: "Feb – Apr 2026",
+    category: "Backend & real-time systems",
+    bullets: [
+      "Built Redis-powered caching and worked on backend authentication and data integrations.",
+      "Developed real-time experiences using WebSockets and contributed to improvements to the product feed.",
+    ],
   },
   {
-    role: "Full Stack Developer Intern",
-    company: "Neuxa Global",
-    period: "May 2025 – July 2025",
-    type: "Remote",
-    description:
-      "With the unwavering focus of Mahadev's blazing third eye, I built responsive full-stack web applications, crafted scalable RESTful APIs, and wove seamless database integrations — always optimizing for clarity, performance, and cosmic user experiences.",
-    tech: ["Next.js", "Node.js", "Supabase", "Prisma", "TypeScript"],
-    color: "violet",
-  }
+    role: "Organizer & Open Source Mentor",
+    company: "JGEC Winter of Code",
+    period: "Feb – Mar 2026",
+    category: "Open source & mentorship",
+    bullets: [
+      "Built backend infrastructure for authentication, project management, and contributor leaderboards.",
+      "Mentored contributors on DashSummarize, an AI Chrome extension, and Orbit CLI, a multi-provider AI agent.",
+    ],
+  },
 ];
 
 export interface Project {
   title: string;
-  tagline: string;
+  category: string;
   description: string;
   github: string;
-  live: string;
+  live?: string;
   tech: string[];
-  featured: boolean;
-  color: "saffron" | "violet" | "gold" | "ganga";
+  detail?: string;
+  featured?: boolean;
+  image: string;
+  imageAlt: string;
+  imageWidth: number;
+  imageHeight: number;
 }
 
 export const projects: Project[] = [
   {
     title: "Jeevan Verse",
-    tagline: "Where life connects life — by Mahadev's boundless grace",
-    description:
-      "A MERN stack web app where users get personalized AI health insights, request blood, join sacred discussions, and support health campaigns. A digital temple of wellness and community.",
+    category: "Health & community platform",
+    description: "A full-stack platform bringing AI-powered health insights, blood requests, community discussions, and health campaigns into one place.",
     github: "https://github.com/Dutta2005/Jeevan-verse",
     live: "https://jeevan-verse.vercel.app/",
-    tech: ["MERN", "RAG", "Gemini", "Vector Embeddings", "Pinecone", "Socket.io", "Nodemailer"],
+    tech: ["MERN", "RAG", "Gemini", "Pinecone", "Socket.io"],
     featured: true,
-    color: "saffron",
+    image: jeevanImage,
+    imageAlt: "Jeevan Verse landing page with health insights, blood requests, and community features.",
+    imageWidth: 3362,
+    imageHeight: 1488,
+  },
+  {
+    title: "Daily Tech News Agent",
+    category: "AI & automation",
+    description: "An automated tech digest that gathers news, uses AI to curate and summarize stories across AI, software development, and cybersecurity, and delivers a daily email newsletter.",
+    github: "https://github.com/Dutta2005/daily-tech-news-agent",
+    tech: ["Node.js", "Vercel AI SDK", "Gemini", "OpenRouter", "PostgreSQL (NeonDB)", "Resend", "GitHub Actions"],
+    image: dailyAgentImage,
+    imageAlt: "Daily Tech News Agent workflow showing news sources, Node.js collection, AI processing, database storage, and newsletter delivery.",
+    imageWidth: 1536,
+    imageHeight: 1024,
   },
   {
     title: "Orbit CLI",
-    tagline: "A multi-dimensional AI oracle, like Mahadev's all-seeing third eye",
-    description:
-      "A multi-provider AI CLI integrating Gemini, OpenAI, and Anthropic with secure auth and personalized configuration. Command the digital cosmos directly from your terminal.",
+    category: "AI developer tool",
+    description: "A multi-provider AI command-line tool bringing Gemini, OpenAI, and Anthropic into one workflow, with secure authentication and personal configuration.",
     github: "https://github.com/Dutta2005/Orbit-CLI",
-    live: "https://github.com/Dutta2005/Orbit-CLI",
-    tech: ["Next.js", "Express.js", "AI SDK", "Better Auth", "Prisma", "NeonDB"],
-    featured: true,
-    color: "violet",
+    tech: ["Next.js", "Express.js", "AI SDK", "Prisma"],
+    image: orbitImage,
+    imageAlt: "Orbit CLI project overview showing its terminal interface, authentication, and AI provider integrations.",
+    imageWidth: 1536,
+    imageHeight: 1024,
   },
   {
     title: "PortfolioAI",
-    tagline: "Manifest your destiny, as Brahma scripts the universe",
-    description:
-      "A full-stack app generating professional portfolios from uploaded resumes using AI parsing and role-based templates. Your divine story, eloquently told.",
+    category: "AI portfolio builder",
+    description: "Turns an uploaded résumé into a professional portfolio with AI parsing and role-based templates. A simpler path from your experience to a personal website.",
     github: "https://github.com/Dutta2005/PortfolioAI/",
     live: "https://portfolio-ai-pied.vercel.app/",
-    tech: ["Next.js", "Shadcn UI", "NextAuth", "OpenAI", "Supabase", "Prisma"],
+    tech: ["Next.js", "OpenAI", "Supabase", "Prisma"],
     featured: true,
-    color: "gold",
+    image: portfolioImage,
+    imageAlt: "PortfolioAI landing page introducing résumé uploads and AI-generated portfolio websites.",
+    imageWidth: 3326,
+    imageHeight: 1504,
   },
   {
-    title: "Stremify",
-    tagline: "Real-time connection, flowing like the eternal sacred Ganga",
-    description:
-      "A MERN app for real-time chat, video calls, and global cultural exchange. Bridging souls across the digital cosmos with live presence.",
+    title: "Mini Kubernetes",
+    category: "Infrastructure & systems",
+    description: "A hands-on, simplified Kubernetes control plane with an API server, job scheduling, Docker execution, and a controller/watcher loop that reconciles workload states.",
+    github: "https://github.com/Dutta2005/mini-k8s",
+    tech: ["Node.js", "Express", "BullMQ", "Docker", "PostgreSQL", "Drizzle ORM", "Valkey"],
+    detail: "Job lifecycle: SUBMITTED → RUNNABLE → RUNNING → SUCCEEDED or FAILED.",
+    image: kubernetesImage,
+    imageAlt: "Kubernetes concept diagram illustrating a control plane, scheduler, controllers, and worker nodes.",
+    imageWidth: 800,
+    imageHeight: 505,
+  },
+  {
+    title: "Streamify",
+    category: "Real-time communication",
+    description: "A MERN application for real-time chat, video calls, and cultural exchange, connecting people through live conversations.",
     github: "https://github.com/Dutta2005/stremify",
     live: "https://stremify-tau.vercel.app",
-    tech: ["MERN", "Tailwind CSS", "TanStack Query", "Stream"],
-    featured: false,
-    color: "ganga",
-  },
-  {
-    title: "ReadmeEasy",
-    tagline: "Speak your truth — let AI inscribe it in the cosmic scroll",
-    description:
-      "A web app that generates comprehensive README files using OpenAI — transforming fragmented ideas into sacred, comprehensive documentation.",
-    github: "https://github.com/Dutta2005/ReadmeEasy",
-    live: "https://readme-easy.vercel.app",
-    tech: ["Next.js", "Shadcn UI", "OpenAI API"],
-    featured: false,
-    color: "saffron",
-  },
-  {
-    title: "Droply",
-    tagline: "Guard your media, as Nandi guards the gates of Kailash",
-    description:
-      "A secure cloud image management platform to store, view, and organize media. Your impenetrable digital sanctuary in the divine clouds.",
-    github: "https://github.com/Dutta2005/Droply",
-    live: "https://droply-ten.vercel.app/",
-    tech: ["Next.js", "Clerk", "HeroUI", "ImageKit", "Drizzle ORM", "NeonDB"],
-    featured: false,
-    color: "violet",
-  },
-  {
-    title: "PixelFlow",
-    tagline: "Transform and transcend — as Shiva's Tandava reshapes existence",
-    description:
-      "A media utility app to compress videos and resize images for social platforms. Transforming raw media with divine efficiency and cosmic speed.",
-    github: "https://github.com/Dutta2005/PixelFlow",
-    live: "https://www.aicloudinary.xyz/",
-    tech: ["Next.js", "Clerk", "DaisyUI", "Cloudinary", "Prisma", "NeonDB"],
-    featured: false,
-    color: "gold",
+    tech: ["MERN", "TanStack Query", "Stream"],
+    image: streamifyImage,
+    imageAlt: "Streamify landing page introducing its language exchange platform, conversations, and video calls.",
+    imageWidth: 3314,
+    imageHeight: 1509,
   },
 ];
 
-export interface Achievement {
-  icon: string;
-  title: string;
-  description: string;
-  date: string;
-  color: "gold" | "saffron" | "violet" | "ganga";
-}
-
-export const achievements: Achievement[] = [
-  {
-    icon: "🏆",
-    title: "Winner — HackWars Hackathon",
-    description:
-      "Emerged victorious among the finest digital warriors, blessed and guided by Mahadev's divine grace and clarity of vision.",
-    date: "March 2025",
-    color: "gold",
-  },
-  {
-    icon: "⚡",
-    title: "Rank 33 / 330+ — Social Winter of Code",
-    description:
-      "Stood among the elite contributors in the open-source realm — a testament to consistent devotion and skillful execution.",
-    date: "March 2025",
-    color: "saffron",
-  },
-  {
-    icon: "🔱",
-    title: "Open Source Mentor — JWoC 2026",
-    description:
-      "Guided the next generation of developers with patience and wisdom, as Lord Shiva guides all souls toward liberation.",
-    date: "2026",
-    color: "violet",
-  },
+export const achievements = [
+  { title: "HackWars Hackathon", result: "Winner", date: "Mar 2025" },
+  { title: "Social Winter of Code", result: "Rank 33 of 330+ contributors", date: "Mar 2025" },
 ];

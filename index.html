@@ -2,17 +2,30 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/om.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Raj Dutta — Full Stack Developer & AI Engineer | Har Har Mahadev</title>
-    <meta name="description" content="Portfolio of Raj Dutta — Full Stack Developer, AI Engineer, and devotee of Lord Mahadev. Building scalable web platforms, AI tools, and SaaS products blessed by the Cosmic Architect." />
-    <meta name="keywords" content="Raj Dutta, Full Stack Developer, AI Engineer, React, Next.js, LangChain, RAG, Portfolio" />
-    <meta property="og:title" content="Raj Dutta | Har Har Mahadev" />
-    <meta property="og:description" content="Full Stack Developer & AI Engineer — building with the fire of Mahadev's third eye." />
+    <meta name="theme-color" content="#11120f" />
+    <meta name="color-scheme" content="dark light" />
+    <script>
+      (() => {
+        let saved = null;
+        try { saved = localStorage.getItem("raj-portfolio-theme"); } catch {}
+        const theme = saved === "light" || saved === "dark"
+          ? saved
+          : window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]').setAttribute("content", theme === "light" ? "#f6f7f3" : "#11120f");
+      })();
+    </script>
+    <style>html{background:#11120f}html[data-theme="light"]{background:#f6f7f3}</style>
+    <meta name="description" content="Raj Dutta — AI Engineer and Full Stack Developer. Explore experience at InterviewSurge, AI agents, developer tools, and full-stack projects." />
+    <meta property="og:title" content="Raj Dutta — AI Engineer & Full Stack Developer" />
+    <meta property="og:description" content="Practical AI, thoughtful product engineering, and full-stack web applications. Experience and selected work by Raj Dutta." />
     <meta property="og:type" content="website" />
+    <title>Raj Dutta — AI Engineer & Full Stack Developer</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400&display=swap" rel="stylesheet" />
   </head>
   <body>
     <div id="root"></div>
